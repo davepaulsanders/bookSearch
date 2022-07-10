@@ -25,6 +25,7 @@ const resolvers = {
       if (!correctPw) {
         AuthenticationError("Incorrect Credentials");
       }
+
       const token = signToken(user);
       return { token, user };
     },
@@ -38,7 +39,6 @@ const resolvers = {
       }
     },
     saveBook: async (parent, { userInput, saveBookInput }) => {
-      
         try {
           const updatedUser = await User.findOneAndUpdate(
             { _id: userInput._id },
