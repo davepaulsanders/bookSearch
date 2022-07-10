@@ -6,12 +6,9 @@ const resolvers = {
   Query: {
     me: async (parent, { username, email, _id }) => {
       const foundUser = await User.findOne({
-        $or: [
-          { _id : _id },
-          { username: username },
-        ],
+        $or: [{ _id: _id }, { username: username }],
       });
-      console.log(foundUser)
+      console.log(foundUser);
       return foundUser;
     },
   },
@@ -41,17 +38,17 @@ const resolvers = {
       }
     },
     saveBook: async (parent, { userInput, saveBookInput }) => {
-      console.log(userInput, saveBookInput);
-      //   try {
-      //     const updatedUser = await User.findOneAndUpdate(
-      //       { _id: userInput._id },
-      //       { $addToSet: { savedBooks: saveBookInput } },
-      //       { new: true, runValidators: true }
-      //     );
-      //     return updatedUser;
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
+      
+        try {
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: userInput._id },
+            { $addToSet: { savedBooks: saveBookInput } },
+            { new: true, runValidators: true }
+          );
+          return updatedUser;
+        } catch (err) {
+          console.log(err);
+        }
     },
   },
 };
