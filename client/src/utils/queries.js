@@ -9,6 +9,9 @@ export const GET_ME = gql`
         title
         description
         image
+        link
+        authors
+        bookId
       }
     }
   }
