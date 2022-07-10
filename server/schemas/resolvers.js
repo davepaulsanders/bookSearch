@@ -30,12 +30,24 @@ const resolvers = {
     addUser: async (parent, args) => {
       try {
         const user = await User.create(args);
-        console.log(user);
         const token = signToken(user);
         return { token, user };
       } catch (err) {
         console.log(err);
       }
+    },
+    saveBook: async (parent, { userInput, saveBookInput }) => {
+      console.log(userInput, saveBookInput);
+      //   try {
+      //     const updatedUser = await User.findOneAndUpdate(
+      //       { _id: userInput._id },
+      //       { $addToSet: { savedBooks: saveBookInput } },
+      //       { new: true, runValidators: true }
+      //     );
+      //     return updatedUser;
+      //   } catch (err) {
+      //     console.log(err);
+      //   }
     },
   },
 };
