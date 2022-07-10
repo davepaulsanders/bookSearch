@@ -39,16 +39,29 @@ const resolvers = {
       }
     },
     saveBook: async (parent, { userInput, saveBookInput }) => {
-        try {
-          const updatedUser = await User.findOneAndUpdate(
-            { _id: userInput._id },
-            { $addToSet: { savedBooks: saveBookInput } },
-            { new: true, runValidators: true }
-          );
-          return updatedUser;
-        } catch (err) {
-          console.log(err);
-        }
+      try {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: userInput._id },
+          { $addToSet: { savedBooks: saveBookInput } },
+          { new: true, runValidators: true }
+        );
+        return updatedUser;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    deleteBook: async (parent, { userInput, bookId }) => {
+      try {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: userInput._id },
+          { $pull: { savedBooks: { bookId: bookId } } },
+          { new: true, runValidators: true }
+        );
+        console.log(updatedUser);
+        return updatedUser;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };
