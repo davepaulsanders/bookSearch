@@ -4,10 +4,14 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: async (parent, { user = null, username }) => {
+    me: async (parent, { username, email, _id }) => {
       const foundUser = await User.findOne({
-        $or: [{ _id: user ? user._id : params.id }, { username: username }],
+        $or: [
+          { _id : _id },
+          { username: username },
+        ],
       });
+      console.log(foundUser)
       return foundUser;
     },
   },
