@@ -16,15 +16,30 @@ import { removeBookId } from "../utils/localStorage";
 const SavedBooks = () => {
   // get data from token
   const user = Auth.getProfile().data;
-  const { loading, data } = useQuery(GET_ME, {
+  const { loading, data, refetch } = useQuery(GET_ME, {
     variables: { username: user.username, email: user.email, _id: user._id },
   });
   const userData = data?.me || {};
-  const [deleteBook, { error }] = useMutation(DELETE_BOOK);
+  const [deleteBook, { error }] = useMutation(DELETE_BOOK, {
+    // update(cache, { data: { deleteBook } }) {
+    //   try {
+    //     // update me array's cache
+    //     const { me } = cache.readQuery({ query: GET_ME });
+    //     cache.writeQuery({
+    //       query: GET_ME,
+    //       data: { me: { ...me, savedBooks: [...me.savedBooks, deleteBook] } },
+    //     });
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // ?\}
+  });
 
   const handleDeleteBook = async (bookId) => {
     try {
       await deleteBook({ variables: { userInput: user, bookId } });
+      removeBookId(bookId);
+      refetch()
     } catch (err) {
       console.error(err);
     }
