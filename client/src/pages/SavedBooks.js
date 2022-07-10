@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Jumbotron,
   Container,
@@ -16,30 +16,24 @@ import { removeBookId } from "../utils/localStorage";
 const SavedBooks = () => {
   // get data from token
   const user = Auth.getProfile().data;
+
+  // query for books, fetch policy is required because component is not
+  // technically mounted when Navigator switches
   const { loading, data, refetch } = useQuery(GET_ME, {
+    fetchPolicy: "network-only",
     variables: { username: user.username, email: user.email, _id: user._id },
   });
+  // save the data to a variavle
   const userData = data?.me || {};
-  const [deleteBook, { error }] = useMutation(DELETE_BOOK, {
-    // update(cache, { data: { deleteBook } }) {
-    //   try {
-    //     // update me array's cache
-    //     const { me } = cache.readQuery({ query: GET_ME });
-    //     cache.writeQuery({
-    //       query: GET_ME,
-    //       data: { me: { ...me, savedBooks: [...me.savedBooks, deleteBook] } },
-    //     });
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // ?\}
-  });
+
+  // delete book mutation
+  const [deleteBook, { error }] = useMutation(DELETE_BOOK);
 
   const handleDeleteBook = async (bookId) => {
     try {
       await deleteBook({ variables: { userInput: user, bookId } });
       removeBookId(bookId);
-      refetch()
+      refetch();
     } catch (err) {
       console.error(err);
     }
