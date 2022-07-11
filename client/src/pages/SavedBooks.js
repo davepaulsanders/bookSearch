@@ -14,9 +14,10 @@ import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
+  
   // get data from token
-  const user = Auth.getProfile().data;
-
+    const user = Auth.getProfile().data;
+    
   // query for books, fetch policy is required because component is not
   // technically mounted when Navigator switches
   const { loading, data, refetch } = useQuery(GET_ME, {
@@ -42,7 +43,7 @@ const SavedBooks = () => {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-
+  
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">
