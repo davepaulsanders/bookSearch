@@ -14,7 +14,6 @@ import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
-  
   // get data from token
     const user = Auth.getProfile().data;
     

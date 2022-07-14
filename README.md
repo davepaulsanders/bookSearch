@@ -14,7 +14,7 @@ This search engine uses the Google Books API. It allows a user to log in and sav
 
 ## Live Site
 
-The site is also viewable [here](https://tech-nically.herokuapp.com/).
+The site is also viewable [here](https://peaceful-sierra-43498.herokuapp.com//).
 
 ## Technologies
 
